@@ -4,7 +4,7 @@ const info = (...params) => {
   }
 };
 
-const erro = (...params) => {
+const error = (...params) => {
   if (process.env.NODE_ENV !== "test") {
     console.log(...params);
   }
