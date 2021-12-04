@@ -6,6 +6,8 @@ const middleware = require("./utils/middleware");
 const logger = require("./utils/logger");
 const mongoose = require("mongoose");
 
+const dummyRoute = require("./routes/dummy_test");
+
 logger.info("Connecting to", config.MONGODB_URI);
 
 mongoose
@@ -20,13 +22,13 @@ mongoose
 // Middleware
 app.use(express.static("build")); // serve the frontend
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 
 app.use(middleware.requestLogger);
-
 // ROUTES
 
 // todo
+app.use("/api/dummy", dummyRoute);
 
 // OTHERS
 app.use(middleware.unknownEndpoint);
