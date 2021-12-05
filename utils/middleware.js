@@ -13,9 +13,20 @@ const unknownEndpoint = (request, response) => {
 };
 
 const errorHandler = (error, request, response, next) => {
-  console.log(error.name);
+  // console.log(error);
 
-  return response.status(500).send({ error: "unhandled Error!" });
+  switch (error.name) {
+    case "MongoServerError":
+      return response.status(500).send(error.message);
+    default:
+      return response.status(500).send({ unhandledError: true, error: error });
+  }
+
+  response.send({
+    ErrorName: error.name,
+    ErrorMessage: error.message,
+    error: error,
+  });
 };
 
 module.exports = {
