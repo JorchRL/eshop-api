@@ -2,6 +2,7 @@ const router = require("express").Router();
 const config = require("../utils/config");
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");
+const jwt = require("jsonwebtoken");
 const { request } = require("../app");
 
 // Register a new user to MongoDB
@@ -39,11 +40,25 @@ router.post("/login", async (req, res, next) => {
     originalPassword !== inputPassword &&
       res.status(401).json("Incorrect credentials: wrong password!");
 
+    // At this point the user is correctly authenticated. So we generate a token
+    // for them
+    const accessToken = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+      },
+      config.JWT_SEC,
+      {
+        expiresIn: "3d",
+      }
+    );
+
     // TODO: replace this hack by defining user.toJSON() in the user model
     const { password, ...others } = user._doc;
 
-    res.status(400).json(others);
+    res.status(400).json({ ...others, accessToken });
   } catch (error) {
+    console.log("Error while logging in");
     next(error);
   }
 });
