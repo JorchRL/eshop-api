@@ -8,9 +8,11 @@ const MONGODB_URI =
     : process.env.MONGODB_URI;
 
 const PASS_SEC = process.env.PASS_SEC;
+const JWT_SEC = process.env.JWT_SEC;
 
 module.exports = {
   MONGODB_URI,
   PORT,
   PASS_SEC,
+  JWT_SEC,
 };
