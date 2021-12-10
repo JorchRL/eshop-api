@@ -18,6 +18,8 @@ const errorHandler = (error, request, response, next) => {
   switch (error.name) {
     case "MongoServerError":
       return response.status(500).send(error.message);
+    case "ValidationError":
+      return response.status(500).send(error.message);
     default:
       return response.status(500).send({ unhandledError: true, error: error });
   }
