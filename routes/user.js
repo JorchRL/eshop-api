@@ -58,7 +58,17 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res, next) => {
 });
 
 // Get all users
-router.get("/", (req, res, next) => {});
+router.get("/", verifyTokenAndAdmin, async (req, res, next) => {
+  const query = req.query.new;
+  try {
+    const users = query
+      ? await User.find().sort({ _id: -1 }).limit(5)
+      : await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Get user stats
 router.get("/stats", (req, res, next) => {});
