@@ -21,7 +21,7 @@ const errorHandler = (error, request, response, next) => {
     case "ValidationError":
       return response.status(500).send(error.message);
     default:
-      return response.status(500).send({ unhandledError: true, error: error });
+      return response.status(505).send({ unhandledError: true, error: error });
   }
 
   response.send({
