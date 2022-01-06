@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 // const dummyRoute = require("./routes/dummy_test");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
+const productRoute = require("./routes/product");
 
 logger.info("Connecting to", config.MONGODB_URI);
 
@@ -31,6 +32,7 @@ app.use(middleware.requestLogger);
 // ROUTES
 app.use("/api/auth", authRoute);
 app.use("/api/user/", userRoute);
+app.use("/api/products", productRoute);
 
 // OTHERS
 app.use(middleware.unknownEndpoint);
